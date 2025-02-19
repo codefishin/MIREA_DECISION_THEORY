@@ -41,10 +41,10 @@ def Pareto():
     for player in player_list:
         index += 1
         for next_player in player_list:
-            if (player.elo - next_player.elo < 400
-                    and player.kd - next_player.kd > .1
-                    and player.elo_diff - next_player.elo_diff < 300
-                    and player.loss30 - next_player.loss30 < 8):
+            if (player.elo > next_player.elo
+                    and player.kd > next_player.kd
+                    and player.elo_diff < next_player.elo_diff
+                    and player.loss30 < next_player.loss30):
                 if index != lastIndex:
                     lastIndex = index
                     result.append(index)
