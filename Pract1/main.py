@@ -48,7 +48,8 @@ def userAddToList(length: int) -> None: # for fun
                 float(input("Enter k/d")),
                 float(input("Enter elo diff")),
                 float(input("Enter loss/30")),
-                  i + 1)
+                  i + 1,
+                str(input("Enter alias")))
 
 
 def Pareto():
