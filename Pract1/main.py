@@ -29,10 +29,10 @@ def autoListFromTask() -> None:
 
 def userAddToList(length: int) -> None: # for fun
     for i in range(0, length):
-        addToList(float(input("Enter price")),
-                float(input("Enter rating")),
-                float(input("Enter weight")),
-                float(input("Enter calories")),
+        addToList(float(input("Enter elo")),
+                float(input("Enter k/d")),
+                float(input("Enter elo diff")),
+                float(input("Enter loss/30")),
                   i + 1)
 
 
