@@ -1,30 +1,45 @@
+import pandas as pd
+
+
 class PlayerData:
-    def __init__(self, elo: float, kd: float, elo_diff: float, loss_in_30: float, pos: int):
+    def __init__(self, elo: float, kd: float, elo_diff: float,
+                 loss_in_30: float, pos: int, name):
         self.elo = elo
         self.kd = kd
         self.elo_diff = elo_diff
         self.loss30 = loss_in_30
         self.pos = pos
+        self.name = name
 
 
 player_list = []
+player_dict = {'Alias': [],
+               'ELO': [],
+               'ELO diff': [],
+               'K/D': [],
+               'Losses in the last 30': []}
 
 def addToList(e: float, kd: float,
-               ed: float, l: float, pos: int) -> None:
-    player = PlayerData(e, kd, ed, l, pos)
+               ed: float, l: float, pos: int, name) -> None:
+    player = PlayerData(e, kd, ed, l, pos, name)
+    player_dict['Alias'].append(player.name)
+    player_dict['ELO'].append(player.elo)
+    player_dict['ELO diff'].append(player.elo_diff)
+    player_dict['K/D'].append(player.kd)
+    player_dict['Losses in the last 30'].append(str(player.loss30) + " losses")
     player_list.append(player)
 
 
 def autoListFromTask() -> None:
-    addToList(3318, 1.14, -216, 11, 1) # 1
-    addToList(2473, 1.04, 629, 14, 2) # 2
-    addToList(2244, 1.08, 858, 19, 3) # 3
-    addToList(2448, 1.10, 654, 18, 4) # 4
-    addToList(1978, 1.24, 1124, 15, 5) # 5
-    addToList(2342, 0.96, 760, 17, 6) # 6
-    addToList(3002, 1.26, 100, 11, 7) # 7
-    addToList(1766, 1.09, 1336, 13, 8) # 8
-    addToList(2608, 1.11, 494, 14, 9) # 9
+    addToList(3318, 1.14, -216, 11, 1, "sinitza7") # 1
+    addToList(2473, 1.04, 629, 14, 2, "neverWMD") # 2
+    addToList(2244, 1.08, 858, 19, 3, "xStaipy") # 3
+    addToList(2448, 1.10, 654, 18, 4, "Ness1z") # 4
+    addToList(1978, 1.24, 1124, 15, 5, "-efemeral") # 5
+    addToList(2342, 0.96, 760, 17, 6, "bishUP_me") # 6
+    addToList(3002, 1.26, 100, 11, 7, "orstedo") # 7
+    addToList(1766, 1.09, 1336, 13, 8, "yourhate") # 8
+    addToList(2608, 1.11, 494, 14, 9, "senz") # 9
 
 
 def userAddToList(length: int) -> None: # for fun
@@ -86,6 +101,11 @@ def Suboptimization():
 
 def main() -> None:
     autoListFromTask() # switchable with userAddToList(10)
+
+    df = pd.DataFrame(player_dict)
+    df.index += 1
+    print(df, '\n')
+
     print("PARETO\n")
     print(Pareto())
     print("\nFIRST PARETO\n")
