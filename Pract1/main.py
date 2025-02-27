@@ -62,8 +62,8 @@ def Pareto():
     for player in player_list:
         index += 1
         for next_player in player_list:
-            if (player.elo > next_player.elo
-                    and player.kd > next_player.kd
+            if (player.elo >= next_player.elo
+                    and player.kd >= next_player.kd
                     and player.elo_diff < next_player.elo_diff
                     and player.loss30 < next_player.loss30):
                 print("A" + str(player.pos) + " доминирует над А"
@@ -76,48 +76,71 @@ def Pareto():
 
 
 def FirstPareto():
-    index = 0
     result = []
     print("Условия:\nОтличие в эло не выше 200.\nK/D игрока выше 1.\n\n")
     for player in player_list:
-        index += 1
-        if player.elo_diff < 200 and player.kd > 1:
-            print("A" + str(index) + " удовлетворяет условиям.")
-            result.append(index)
+        if player.elo_diff < 200 and player.kd >= 1:
+            print("A" + str(player.pos) + " удовлетворяет условиям.")
+            result.append(player.pos)
             continue
     return result
 
 
 def Suboptimization():
-    index = 0
     result = []
     print("Условия:\nГлавное: ELO выше 3050.\n"
           "Отличие в ELO меньше 100, но не меньше -250.\n"
           "K/D больше 1,1.\nКол-во поражений меньше 15.\n\n")
     for player in player_list:
-        index += 1
-        if (player.elo > 3050
-                and 100 > player.elo_diff > -250
-                and player.kd > 1.1
+        if (player.elo >= 3050
+                and 100 > player.elo_diff >= -250
+                and player.kd >= 1.1
                 and player.loss30 < 15):
-            print("A" + str(index) + " удовлетворяет условиям.")
-            result.append(index)
+            print("A" + str(player.pos) + " удовлетворяет условиям.")
+            result.append(player.pos)
             continue
     return result
 
 
 def LexAnalysis():
-    index = 0
     result = []
+    players = []
     for player in player_list:
-        index += 1
-        if player.elo_diff < 200 and player.kd > 1:
-            result.append(index)
+        if player.elo_diff < 200 and player.kd >= 1:
+            result.append(player.pos)
+            players.append(player)
             continue
     print("Список доминирующих альтернатив:", result)
-    print("По лексикографической оптимизации лучшим вариантом является 1.")
+
+    best_player = 0
+    for player in players:
+        for next_player in players:
+            if player == next_player:
+                continue
+            if player.elo > next_player.elo:
+                best_player = player.pos
+                break
+            elif player.elo == next_player.elo:
+                if player.kd > next_player.kd:
+                    best_player = player.pos
+                    break
+                elif player.kd == next_player.kd:
+                    if player.elo_diff < next_player.elo_diff:
+                        best_player = player.pos
+                        break
+                    elif player.elo_diff == next_player.elo_diff:
+                        if player.loss30 < next_player.loss30:
+                            best_player = player.pos
+                            break
+                        elif player.loss30 == next_player.loss30:
+                            print("Найдена одинаковая альтернатива!")
+                            return 0
+
+
+
+    print("По лексикографической оптимизации лучшим вариантом является:", best_player)
     root = tkinter.Tk()
-    lex_img = Image.open("<FILE_PATH>")
+    lex_img = Image.open("C:\\Users\\Alex\\PycharmProjects\\TRP\\1\\lex.png")
     root.geometry("503x711")
     root.maxsize(503, 711)
     img = ImageTk.PhotoImage(lex_img)
