@@ -118,6 +118,8 @@ def LexAnalysis():
     print("По лексикографической оптимизации лучшим вариантом является 1.")
     root = tkinter.Tk()
     lex_img = Image.open("<FILE_PATH>")
+    root.geometry("503x711")
+    root.maxsize(503, 711)
     img = ImageTk.PhotoImage(lex_img)
     label1 = tkinter.Label(image=img)
     label1.image = img
