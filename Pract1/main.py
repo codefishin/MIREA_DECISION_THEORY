@@ -140,7 +140,7 @@ def LexAnalysis():
 
     print("По лексикографической оптимизации лучшим вариантом является:", best_player)
     root = tkinter.Tk()
-    lex_img = Image.open("C:\\Users\\Alex\\PycharmProjects\\TRP\\1\\lex.png")
+    lex_img = Image.open("<FILE_PATH>\\lex.png")
     root.geometry("503x711")
     root.maxsize(503, 711)
     img = ImageTk.PhotoImage(lex_img)
