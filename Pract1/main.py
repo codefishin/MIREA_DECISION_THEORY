@@ -1,4 +1,6 @@
 import pandas as pd
+from PIL import ImageTk, Image
+import tkinter
 
 
 class PlayerData:
@@ -100,6 +102,25 @@ def Suboptimization():
     return result
 
 
+def LexAnalysis():
+    index = 0
+    result = []
+    for player in player_list:
+        index += 1
+        if player.elo_diff < 200 and player.kd > 1:
+            result.append(index)
+            continue
+    print("Список доминирующих альтернатив:",result)
+    print("По лексикографической оптимизации лучшим вариантом является 1.")
+    root = tkinter.Tk()
+    lex_img = Image.open("C:\\Users\\Alex\\PycharmProjects\\TRP\\lex.png")
+    img = ImageTk.PhotoImage(lex_img)
+    label1 = tkinter.Label(image=img)
+    label1.image = img
+    label1.place(x=0, y=0)
+    root.mainloop()
+
+
 def main() -> None:
     autoListFromTask() # switchable with userAddToList(10)
 
@@ -113,6 +134,9 @@ def main() -> None:
     print(FirstPareto())
     print("\nSUB-OPTIMIZATION\n")
     print(Suboptimization())
+    print("\nLEX-OPTIMIZATION\n")
+    LexAnalysis()
+
 
 if __name__ == "__main__":
     main()
