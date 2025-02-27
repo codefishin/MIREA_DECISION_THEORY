@@ -117,7 +117,7 @@ def LexAnalysis():
     print("Список доминирующих альтернатив:", result)
     print("По лексикографической оптимизации лучшим вариантом является 1.")
     root = tkinter.Tk()
-    lex_img = Image.open("C:\\Users\\Alex\\PycharmProjects\\TRP\\lex.png")
+    lex_img = Image.open("<FILE_PATH>")
     img = ImageTk.PhotoImage(lex_img)
     label1 = tkinter.Label(image=img)
     label1.image = img
