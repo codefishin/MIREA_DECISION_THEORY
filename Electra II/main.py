@@ -1,5 +1,3 @@
-from string import printable
-
 import pandas as pd
 import numpy
 from PIL import ImageTk, Image
@@ -14,18 +12,6 @@ class PlayerData:
         self.elo_diff = elo_diff
         self.loss30 = loss_in_30
         self.name = name
-        """
-            print("По лексикографической оптимизации лучшим вариантом является:", best_player)
-            root = tkinter.Tk()
-            lex_img = Image.open("")
-            root.geometry("503x711")
-            root.maxsize(503, 711)
-            img = ImageTk.PhotoImage(lex_img)
-            label1 = tkinter.Label(image=img)
-            label1.image = img
-            label1.place(x=0, y=0)
-            root.mainloop()
-        """
 
 
 player_list = []
@@ -200,12 +186,12 @@ def loop_through_electra_list(*, c = 0):
             # print(f"Рассмотрим альтернативы {i} и {j} (i = {i}, j = {j})")
             r1 = calc_p_n_d(i + 1, j + 1)
             r2 = calc_p_n_d(j + 1, i + 1)
-            if r1 > c:
-                arr[i, j] = r1
+            if r2 > c:
+                arr[i, j] = r2
             else:
                 arr[i, j] = ''
-            if r2 > c:
-                arr[j, i] = r2
+            if r1 > c:
+                arr[j, i] = r1
             else:
                 arr[j, i] = ''
 
