@@ -205,11 +205,10 @@ def loop_through_electra_list(*, c = 0):
 def main() -> None:
     autoListFromTask()  # switchable with userAddToList(10)
 
-    df = pd.DataFrame(player_dict)
-    df.index += 1
-    print(df, '\n')
     for _ in range(0, 9):
         get_electra_list(player_name_index=_)
+    loop_through_electra_list()
+    print('-' * 25, 'C = 2', '-' * 25)
     loop_through_electra_list(c=2)
 
 
