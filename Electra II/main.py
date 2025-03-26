@@ -1,8 +1,5 @@
 import pandas as pd
 import numpy
-from PIL import ImageTk, Image
-import tkinter
-
 
 class PlayerData:
     def __init__(self, elo: float, kd: float, elo_diff: float,
