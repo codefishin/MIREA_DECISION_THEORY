@@ -110,6 +110,7 @@ def calc_p_n_d(index1: int, index2: int, *, printable=False):
         output_p += "0 ="
         output_n += "1 ="
         n += 1
+
     if printable is True:
         print(output_p, p, '\b;')
         print(output_n, n, '\b;')
@@ -129,7 +130,21 @@ def calc_p_n_d(index1: int, index2: int, *, printable=False):
     return d
 
 
-def loop_through_electra_list(*, c = 1, can_print=False) -> None:
+def get_alts_connections() -> None:
+    for i in range(9):
+        connection = 0
+        connected = 0
+        for j in range(9):
+            if i == j:
+                continue
+            if arr[i, j] != '':
+                connection += 1
+            if arr[j, i] != '':
+                connected += 1
+        print(f'A{i + 1} ({connection}, {connected})')
+
+
+def gen_electre_list(*, c = 1, can_print=False) -> None:
     for i in range(9):
         for j in range(9):
             if i == j:
@@ -158,26 +173,10 @@ def loop_through_electra_list(*, c = 1, can_print=False) -> None:
     get_alts_connections()
 
 
-def get_alts_connections() -> None:
-    for i in range(9):
-        connection = 0
-        connected = 0
-        for j in range(9):
-            if i == j:
-                continue
-            if arr[i, j] != '':
-                connection += 1
-            if arr[j, i] != '':
-                connected += 1
-        print(f'A{i + 1} ({connection}, {connected})')
-
-
 def main() -> None:
     autoListFromTask()  # switchable with userAddToList(10)
 
-    loop_through_electra_list(can_print=True)
-    print('-' * 25, 'C = 5', '-' * 25)
-    loop_through_electra_list(c=5)
+    gen_electre_list()
 
 
 if __name__ == "__main__":
