@@ -155,6 +155,7 @@ def loop_through_electra_list(*, c = 1, can_print=False) -> None:
     d.index += 1
     d.columns += 1
     print(d, '\n')
+    get_alts_connections()
 
 
 def get_alts_connections() -> None:
@@ -175,7 +176,6 @@ def main() -> None:
     autoListFromTask()  # switchable with userAddToList(10)
 
     loop_through_electra_list(can_print=True)
-    get_alts_connections()
     print('-' * 25, 'C = 5', '-' * 25)
     loop_through_electra_list(c=5)
 
