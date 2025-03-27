@@ -12,12 +12,12 @@ class PlayerData:
 
 
 player_list = []
-electra_list = []
 player_dict = {'Alias': [],
                'ELO': [],
                'ELO diff': [],
                'K/D': [],
                'Losses in the last 30': []}
+arr = numpy.zeros((9, 9), dtype=object)
 
 
 def addToList(e: float, kd: float,
@@ -52,49 +52,14 @@ def userAddToList(length: int) -> None:  # for fun
                   str(input("Enter alias")))
 
 
-
-def get_electra_list(*, player_name_index = 0):
-    player = player_list[player_name_index]
-    if player.elo > 2900:
-        elo = 15
-    elif 2400 < player.elo <= 2900:
-        elo = 10
-    else:
-        elo = 5
-
-    if player.elo_diff > 400:
-        elo_diff = 15
-    elif 100 < player.elo_diff <= 400:
-        elo_diff = 10
-    else:
-        elo_diff = 5
-
-    if player.kd > 1.1:
-        kd = 15
-    elif 1 < player.kd <= 1.1:
-        kd = 10
-    else:
-        kd = 5
-
-    if player.loss30 > 18:
-        loss = 15
-    elif 12 < player.loss30 <= 18:
-        loss = 10
-    else:
-        loss = 5
-
-    electra_list.append(PlayerData(elo, kd, elo_diff, loss, player.name))
-
-
 def calc_p_n_d(index1: int, index2: int, *, printable=False):
     p = 0
     n = 0
-    d = 0
     output_p = "P" + str(index1) + str(index2)
     output_n = "N" + str(index1) + str(index2)
     output_d = "D" + str(index1) + str(index2) + " = " + output_p + '/' + output_n + ' = '
-    player1 = electra_list[index1 - 1]
-    player2 = electra_list[index2 - 1]
+    player1 = player_list[index1 - 1]
+    player2 = player_list[index2 - 1]
     output_p += " = "
     output_n += " = "
 
@@ -150,63 +115,69 @@ def calc_p_n_d(index1: int, index2: int, *, printable=False):
         print(output_n, n, '\b;')
     output_d += str(p) + '/' + str(n) + " ="
 
-    if printable is False and p == 0 and n != 0:
-        return numpy.inf
-    if printable is False and p != 0 and n != 0:
-        return p / n
-    if printable is False and n == 0:
-        return 0
-
     if n != 0:
         d = p / n
-        if d > 1:
-            print(output_d, d, '> 1 - принимаем;')
-        else:
-            if p == 0:
-                d = numpy.inf
+        if printable is True:
+            if d > 1:
                 print(output_d, d, '> 1 - принимаем;')
             else:
                 print(output_d, d, '< 1 - отбрасываем;')
     else:
-        print(output_d, d, '- деление на 0, отбрасываем')
+        d = numpy.inf
+        if printable is True:
+            print(output_d, d, '> 1 - принимаем;')
     return d
 
 
-def loop_through_electra_list(*, c = 0):
-    arr = numpy.zeros((9, 9), dtype=object)
+def loop_through_electra_list(*, c = 1, can_print=False) -> None:
     for i in range(9):
         for j in range(9):
             if i == j:
                 arr[i, j] = 'X'
             if i == j or i > j:
                 continue
-            # print(f"Рассмотрим альтернативы {i} и {j} (i = {i}, j = {j})")
-            r1 = calc_p_n_d(i + 1, j + 1)
-            r2 = calc_p_n_d(j + 1, i + 1)
-            if r2 > c:
-                arr[i, j] = r2
+            if can_print is True:
+                print(f"Рассмотрим альтернативы {i + 1} и {j + 1} (i = {i + 1}, j = {j + 1})")
+            r1 = calc_p_n_d(i + 1, j + 1, printable=can_print)
+            r2 = calc_p_n_d(j + 1, i + 1, printable=can_print)
+            if r1 > c:
+                arr[i, j] = r1
             else:
                 arr[i, j] = ''
-            if r1 > c:
-                arr[j, i] = r1
+            if r2 > c:
+                arr[j, i] = r2
             else:
                 arr[j, i] = ''
 
-            # print('\n')
+            if can_print is True:
+                print('\n')
     d = pd.DataFrame(arr)
     d.index += 1
     d.columns += 1
     print(d, '\n')
 
 
+def get_alts_connections() -> None:
+    for i in range(9):
+        connection = 0
+        connected = 0
+        for j in range(9):
+            if i == j:
+                continue
+            if arr[i, j] != '':
+                connection += 1
+            if arr[j, i] != '':
+                connected += 1
+        print(f'A{i + 1} ({connection}, {connected})')
+
+
 def main() -> None:
     autoListFromTask()  # switchable with userAddToList(10)
 
-    for _ in range(0, 9):
-        get_electra_list(player_name_index=_)
-    loop_through_electra_list()
-    print('-' * 25, 'C = 2', '-' * 25)
-    loop_through_electra_list(c=2)
+    loop_through_electra_list(can_print=True)
+    get_alts_connections()
+    print('-' * 25, 'C = 5', '-' * 25)
+    loop_through_electra_list(c=5)
 
 
 if __name__ == "__main__":
