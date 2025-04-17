@@ -54,18 +54,18 @@ class Functions:
     def generate_graph(self):
         x = np.linspace(0, 10, 400)
         vec_limit = np.linspace(-3, 3, 400)
+        f_limit = np.linspace(-6, 6, 400)
         draw_on_vec1 = np.linspace(0.43, 6.43, 400)
         draw_on_vec2 = np.linspace(0, 6, 400)
         y = (self.equality1 - self.eqx1 * x) / self.eqx2
         y2 = (self.equality2 - self.eqx2 * x) / self.eqx4
-        vec1 = 5 * vec_limit / 3
-        vec2 = -5 * vec_limit / 3
+        vec = -5 * vec_limit / 3
         plt.plot(x, y, label=self.y_func1)
         plt.plot(x, y2, label=self.y_func2)
-        plt.plot(vec_limit, vec1, label='Целевая')
-        plt.plot(vec_limit, vec2, label="f(x)'")
-        plt.plot(draw_on_vec1, vec2)
-        plt.plot(draw_on_vec2, vec2 + 5.5)
+        plt.plot(f_limit, 5 * f_limit / 3, label='Целевая')
+        plt.plot(vec_limit, vec, label="f(x)'")
+        plt.plot(draw_on_vec1, vec)
+        plt.plot(draw_on_vec2, vec + 5.5)
         plt.axhline(0, color='black', linewidth=0.5)
         plt.axvline(0, color='black', linewidth=0.5)
         plt.xlabel('X')
