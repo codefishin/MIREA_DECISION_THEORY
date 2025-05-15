@@ -42,13 +42,21 @@ class Functions:
 
     def check_odr(self):
         point_y_intercept = (0, self.equality1 / self.eqx2)
-        checked_str = f'{self.eqx1} * {point_y_intercept[0]} + {self.eqx2} * {point_y_intercept[1]} == {self.equality1}'
-        checked = self.eqx1 * point_y_intercept[0] + self.eqx2 * point_y_intercept[1] == self.equality1
+        checked_str = f'{self.eqx1} * {point_y_intercept[0]} + {self.eqx2} * {point_y_intercept[1]} <= {self.equality1}'
+        checked = self.eqx1 * point_y_intercept[0] + self.eqx2 * point_y_intercept[1] <= self.equality1
         print(checked_str, checked, sep='\n')
 
-        point_x_intercept = (self.equality1 / self.eqx1, 0)
-        checked_str = f'{self.eqx1} * {point_x_intercept[0]} + {self.eqx2} * {point_x_intercept[1]} == {self.equality1}'
-        checked = self.eqx1 * point_x_intercept[0] + self.eqx2 * point_x_intercept[1] == self.equality1
+        checked_str = f'{self.eqx1} * {point_y_intercept[0]} + {self.eqx2} * {point_y_intercept[1]} >= {22}'
+        checked = self.eqx1 * point_y_intercept[0] + self.eqx2 * point_y_intercept[1] >= 22
+        print(checked_str, checked, sep='\n')
+
+        x = 4
+        y = 2
+        checked_str = f'{self.eqx1} * {x} + {self.eqx2} * {y} <= {self.equality1}'
+        checked = self.eqx1 * x + self.eqx2 * y <= self.equality1
+        print(checked_str, checked, sep='\n')
+        checked_str = f'{self.eqx1} * {x} + {self.eqx2} * {y} >= {22}'
+        checked = self.eqx1 * x + self.eqx2 * y >= 22
         print(checked_str, checked, sep='\n')
 
     def generate_graph(self):
@@ -62,9 +70,9 @@ class Functions:
         vec = -5 * vec_limit / 3
         plt.plot(x, y, label=self.y_func1)
         plt.plot(x, y2, label=self.y_func2)
-        plt.plot(f_limit, 5 * f_limit / 3, label='Целевая')
+        plt.plot(f_limit, 5 * f_limit / 3, label='Градиент')
 
-        plt.plot(vec_limit, vec, label="f(x)'")
+        plt.plot(vec_limit, vec, label="Функция")
         plt.plot(draw_on_vec, vec + 4.35)
         plt.plot(draw_on_vec, vec + 3.75)
         plt.axhline(0, color='black', linewidth=0.5)
