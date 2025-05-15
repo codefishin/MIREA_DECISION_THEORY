@@ -41,6 +41,7 @@ class Functions:
         self.equality2 = equality2
 
     def check_odr(self):
+        print("ODR:")
         point_y_intercept = (0, self.equality1 / self.eqx2)
         checked_str = f'{self.eqx1} * {point_y_intercept[0]} + {self.eqx2} * {point_y_intercept[1]} == {self.equality1}'
         checked = self.eqx1 * point_y_intercept[0] + self.eqx2 * point_y_intercept[1] == self.equality1
@@ -52,21 +53,21 @@ class Functions:
         print(checked_str, checked, sep='\n')
 
     def generate_graph(self):
-        x = np.linspace(0, 10, 400)
-        vec_limit = np.linspace(-3, 3, 400)
-        f_limit = np.linspace(-6, 6, 400)
-        draw_on_vec = np.linspace(0, 6, 400)
-
+        x = np.linspace(0, 10, 200)
+        vec_limit = np.linspace(-3, 3, 200)
+        vec_on_limit = np.linspace(0, 6.5, 200)
+        draw_on_vec = np.linspace(0, 6, 200)
         y = (self.equality1 - self.eqx1 * x) / self.eqx2
         y2 = (self.equality2 - self.eqx2 * x) / self.eqx4
-        vec = -5 * vec_limit / 3
+        vec1 = 5 * vec_limit / 3
+        vec2 = -5 * vec_limit / 3
+
         plt.plot(x, y, label=self.y_func1)
         plt.plot(x, y2, label=self.y_func2)
-        plt.plot(f_limit, 5 * f_limit / 3, label='Целевая')
-
-        plt.plot(vec_limit, vec, label="f(x)'")
-        plt.plot(draw_on_vec, vec + 4.35)
-        plt.plot(draw_on_vec, vec + 3.75)
+        plt.plot(vec_limit, vec1, label='grad')
+        plt.plot(vec_limit, vec2, label='anti-grad')
+        plt.plot(vec_on_limit, y + vec2 + 2, label="")
+        plt.plot(draw_on_vec, vec2 + 3.75)
         plt.axhline(0, color='black', linewidth=0.5)
         plt.axvline(0, color='black', linewidth=0.5)
         plt.xlabel('X')
